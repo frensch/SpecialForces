@@ -1,0 +1,4 @@
+C:\Users\frensch\Documents\Hololens\SpecialForces\App\GeneratedProjects\UWP\Assembly-CSharp\Assembly-CSharp.csproj;x86
+C:\Users\frensch\Documents\Hololens\SpecialForces\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+C:\Users\frensch\Documents\Hololens\SpecialForces\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\Assembly-CSharp-firstpass.csproj;x86
+C:\Users\frensch\Documents\Hololens\SpecialForces\App\SpecialForces\SpecialForces.csproj;x86
