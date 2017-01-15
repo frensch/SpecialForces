@@ -22,7 +22,7 @@ public class TargetHitManager : MonoBehaviour {
     void OnSelect()
     {
         GameObject bullet = (GameObject)Object.Instantiate(BulletMark, gazeGestureManager.GetPos(), gazeGestureManager.GetRotation());
-        score.AddPoints(100);
+        score.AddPoints(points);
         Object.Destroy(bullet, 1.0f);
         Object.Destroy(gameObject, 1.0f);
     }
