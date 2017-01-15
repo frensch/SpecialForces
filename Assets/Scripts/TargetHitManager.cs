@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetHitManager : MonoBehaviour {
+    public int points;
     public GameObject BulletMark;
     private ScoreManager score;
     private GazeGestureManager gazeGestureManager;
