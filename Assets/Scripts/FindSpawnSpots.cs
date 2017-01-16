@@ -9,9 +9,19 @@ public class FindSpawnSpots : MonoBehaviour {
     public GameObject hostage;
     public GameObject targetsPivot;
     public Text text;
+
+    private float targetLifeTime = 10.0f;
+    private float targetCreationTime = 20.0f;
     private Vector3 headPosition;
     private Vector3 originalGazeDirection;
     private Vector3 originalGazeSideDirection;
+
+    public void DecreaseSpawnTime(float value)
+    {
+        targetLifeTime *= 1-value;
+        targetCreationTime *= 1-value;
+    }
+
     // Use this for initialization
     void Start () {
         headPosition = Camera.main.transform.position;
@@ -28,33 +38,32 @@ public class FindSpawnSpots : MonoBehaviour {
     }
     IEnumerator CreateSpawnPoints()
     {
-        //text.text = "headPosition: " + headPosition + "\n";
+        string logRot = "";
+        string logTarget = "";
         int hostageIndex = Random.Range(0, 3);
-        text.text = "";
         for (int i = 0; i < 4; ++i)
         {
-            text.text = "hostage: " + hostageIndex + "\n";
             GameObject targetPrefab = target;
             if (i == hostageIndex)
                 targetPrefab = hostage;
             Vector3 gazeDirection = Camera.main.transform.forward;
             Vector3 gaze = Quaternion.Euler(0, i*90 + Random.Range(-45.0f,45.0f), 0) * gazeDirection;
             float rot = AngleBetweenDirections(gaze, originalGazeDirection);
-            text.text += "rot: " + rot + "\n";
-            //text.text += "gaze: " + gaze + "\n";
+            logRot += "" + i + ": " + rot + ",";
             RaycastHit hitInfo;
             if (Physics.Raycast(headPosition, gaze, out hitInfo))
             {
-                //text.text += "hit: " + hitInfo.point + "\n";
-                //tr.Rotate(Vector3.up, rot);
                 Quaternion quat = targetPrefab.transform.rotation;
                 Quaternion quatRot = new Quaternion(0,Mathf.Sin(Mathf.PI * rot / (2 * 180)),0,Mathf.Cos(Mathf.PI*rot/(2*180)));
                 quat *= quatRot;
                 GameObject obj = (GameObject)Instantiate(targetPrefab, hitInfo.point, quat);//Quaternion.FromToRotation(Vector3.up, -gaze));
                 obj.transform.parent = targetsPivot.transform;
+                Destroy(obj, targetLifeTime);
             }
         }
-        yield return new WaitForSeconds(30.0f);
+        text.text = logRot + "\n" + text.text;
+        text.text = "spawn: " + targetCreationTime + " lifetime: " + targetLifeTime + "\n" + text.text;
+        yield return new WaitForSeconds(targetCreationTime);
         StartCoroutine(CreateSpawnPoints());
     }
     
