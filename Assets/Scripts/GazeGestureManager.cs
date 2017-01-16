@@ -10,7 +10,7 @@ public class GazeGestureManager : MonoBehaviour
 
     private Vector3 pos;
     private Quaternion rot;
-
+    private AudioSource audio;
     GestureRecognizer recognizer;
 
     public Vector3 GetPos()
@@ -24,13 +24,15 @@ public class GazeGestureManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         Instance = this;
 
         // Set up a GestureRecognizer to detect Select gestures.
         recognizer = new GestureRecognizer();
         recognizer.TappedEvent += (source, tapCount, ray) =>
         {
-            // Send an OnSelect message to the focused object and its ancestors.
+            audio.Play();
+            // Send an OnSselect message to the focused object and its ancestors.
             if (FocusedObject != null)
             {
                 FocusedObject.SendMessageUpwards("OnSelect");

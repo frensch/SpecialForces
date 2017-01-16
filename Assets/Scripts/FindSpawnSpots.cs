@@ -38,7 +38,6 @@ public class FindSpawnSpots : MonoBehaviour {
             if (i == hostageIndex)
                 targetPrefab = hostage;
             Vector3 gazeDirection = Camera.main.transform.forward;
-            Vector3 gazeSideDirection = Camera.main.transform.right;
             Vector3 gaze = Quaternion.Euler(0, i*90 + Random.Range(-45.0f,45.0f), 0) * gazeDirection;
             float rot = AngleBetweenDirections(gaze, originalGazeDirection);
             text.text += "rot: " + rot + "\n";
