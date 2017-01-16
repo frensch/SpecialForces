@@ -1,1 +1,0 @@
-C:\Users\frensch\Documents\Hololens\SpecialForces\App\GeneratedProjects\UWP\Assembly-CSharp-firstpass\obj\ARM\Debug\ARM\Debug\Assembly-CSharp-firstpass.csprojResolveAssemblyReference.cache
