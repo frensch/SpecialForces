@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class FindSpawnSpots : MonoBehaviour {
 
     public GameObject target;
+    public GameObject hostage;
     public GameObject targetsPivot;
     public Text text;
     private Vector3 headPosition;
@@ -28,22 +29,18 @@ public class FindSpawnSpots : MonoBehaviour {
     IEnumerator CreateSpawnPoints()
     {
         //text.text = "headPosition: " + headPosition + "\n";
+        int hostageIndex = Random.Range(0, 3);
         text.text = "";
         for (int i = 0; i < 4; ++i)
         {
-            
+            text.text = "hostage: " + hostageIndex + "\n";
+            GameObject targetPrefab = target;
+            if (i == hostageIndex)
+                targetPrefab = hostage;
             Vector3 gazeDirection = Camera.main.transform.forward;
             Vector3 gazeSideDirection = Camera.main.transform.right;
-            Vector3 gaze = gazeDirection;
-            float rot = 0;
-            switch (i)
-            {
-                case 0: rot = 0; gaze = gazeDirection; break;
-                case 1: rot = -90; gaze = gazeSideDirection; gaze.z *= -1; gaze.x *= -1; break;
-                case 2: rot = 90; gaze = gazeSideDirection; break;
-                case 3: rot = 180; gaze = gazeDirection; gaze.z *= -1; gaze.x *= -1; break;
-            }
-            rot = AngleBetweenDirections(gaze, originalGazeDirection);
+            Vector3 gaze = Quaternion.Euler(0, i*90 + Random.Range(-45.0f,45.0f), 0) * gazeDirection;
+            float rot = AngleBetweenDirections(gaze, originalGazeDirection);
             text.text += "rot: " + rot + "\n";
             //text.text += "gaze: " + gaze + "\n";
             RaycastHit hitInfo;
@@ -51,10 +48,10 @@ public class FindSpawnSpots : MonoBehaviour {
             {
                 //text.text += "hit: " + hitInfo.point + "\n";
                 //tr.Rotate(Vector3.up, rot);
-                Quaternion quat = target.transform.rotation;
+                Quaternion quat = targetPrefab.transform.rotation;
                 Quaternion quatRot = new Quaternion(0,Mathf.Sin(Mathf.PI * rot / (2 * 180)),0,Mathf.Cos(Mathf.PI*rot/(2*180)));
                 quat *= quatRot;
-                GameObject obj = (GameObject)Instantiate(target, hitInfo.point, quat);//Quaternion.FromToRotation(Vector3.up, -gaze));
+                GameObject obj = (GameObject)Instantiate(targetPrefab, hitInfo.point, quat);//Quaternion.FromToRotation(Vector3.up, -gaze));
                 obj.transform.parent = targetsPivot.transform;
             }
         }
