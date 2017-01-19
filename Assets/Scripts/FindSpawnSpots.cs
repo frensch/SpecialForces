@@ -15,6 +15,18 @@ public class FindSpawnSpots : MonoBehaviour {
     private Vector3 headPosition;
     private Vector3 originalGazeDirection;
     private Vector3 originalGazeSideDirection;
+    private bool abortSpawn = false;
+    public void StopTime()
+    {
+        abortSpawn = true;
+    }
+    public void ResetTime()
+    {
+        targetLifeTime = 10.0f;
+        targetCreationTime = 20.0f;
+        abortSpawn = false;
+        StartCoroutine(CreateSpawnPoints());
+    }
 
     public void DecreaseSpawnTime(float value)
     {
@@ -64,7 +76,8 @@ public class FindSpawnSpots : MonoBehaviour {
         text.text = logRot + "\n" + text.text;
         text.text = "spawn: " + targetCreationTime + " lifetime: " + targetLifeTime + "\n" + text.text;
         yield return new WaitForSeconds(targetCreationTime);
-        StartCoroutine(CreateSpawnPoints());
+        if(!abortSpawn)
+            StartCoroutine(CreateSpawnPoints());
     }
     
     // Update is called once per frame
