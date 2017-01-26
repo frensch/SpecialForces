@@ -14,7 +14,6 @@ public class FindSpawnSpots : MonoBehaviour {
     private float targetCreationTime = 20.0f;
     private Vector3 headPosition;
     private Vector3 originalGazeDirection;
-    private Vector3 originalGazeSideDirection;
     private bool abortSpawn = false;
     public void StopTime()
     {
@@ -38,7 +37,6 @@ public class FindSpawnSpots : MonoBehaviour {
     void Start () {
         headPosition = Camera.main.transform.position;
         originalGazeDirection = Camera.main.transform.forward;
-        originalGazeSideDirection = Camera.main.transform.right;
 
         StartCoroutine(CreateSpawnPoints());
     }
@@ -51,7 +49,6 @@ public class FindSpawnSpots : MonoBehaviour {
     IEnumerator CreateSpawnPoints()
     {
         string logRot = "";
-        string logTarget = "";
         int hostageIndex = Random.Range(0, 3);
         for (int i = 0; i < 4; ++i)
         {
