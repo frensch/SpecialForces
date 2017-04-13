@@ -16,14 +16,13 @@ public class TargetHitManager : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         score = transform.parent.GetComponentInParent<ScoreManager>();
         gazeGestureManager = transform.parent.GetComponentInParent<GazeGestureManager>();
-        //score.AddPoints(1);
     }
     // Called by GazeGestureManager when the user performs a Select gesture
     void OnSelect()
     {
         GameObject bullet = (GameObject)Object.Instantiate(BulletMark, gazeGestureManager.GetPos(), gazeGestureManager.GetRotation());
         score.AddPoints(points);
-        Object.Destroy(bullet, 1.0f);
+        bullet.transform.parent = gameObject.transform;
         Object.Destroy(gameObject, 1.0f);
     }
 }
